@@ -47,3 +47,11 @@ kotlin {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+tasks.jar {
+    archiveFileName.set("api-gateway.jar")
+}
+
+tasks.bootJar {
+    archiveFileName.set("api-gateway-standalone.jar")
+}
