@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  api-gateway:
+    image: melowetty/api-gateway
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
+    env_file: ./.env
+    environment:
+      - SPRING_PROFILES_ACTIVE=$ACTIVE_PROFILE
+      - SERVER_PORT=$SPRING_LOCAL_PORT
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://$SERVICE_DISCOVERY_USER:$SERVICE_DISCOVERY_PASSWORD@$SERVICE_DISCOVERY_HOST:$SERVICE_DISCOVERY_PORT/eureka
+    restart: always
+    networks:
+      - service-discovery_internal
+networks:
+  service-discovery_internal:
+    external: true
