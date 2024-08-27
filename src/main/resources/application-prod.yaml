@@ -1,0 +1,16 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: ${SERVICE_DISCOVERY_URL}
+server:
+  port: ${SERVER_PORT:8000}
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: main-backend
+          uri: lb://main-backend
+          predicates:
+            - Path=/users/**,/user/**,/notifications/**,/v3/schedules/**,/schedule/**
+

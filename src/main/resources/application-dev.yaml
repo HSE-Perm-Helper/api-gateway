@@ -1,0 +1,18 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:admin@localhost:8761/eureka
+server:
+  port: 8000
+
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: main-backend
+          uri: lb://main-backend
+          predicates:
+            - Path=/users/**,/user/**,/notifications/**,/v3/schedules/**,/schedule/**
+debug: true
+
