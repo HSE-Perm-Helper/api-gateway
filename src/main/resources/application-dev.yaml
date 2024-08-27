@@ -13,6 +13,6 @@ spring:
         - id: main-backend
           uri: lb://main-backend
           predicates:
-            - Path=/users/**,/user/**,/notifications/**,/v3/schedules/**,/schedule/**
+            - Path=/users/**,/user/**,/notifications/**,/v3/schedules/**,/v3/schedule/**,/schedule/**
 debug: true
 
