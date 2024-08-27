@@ -31,3 +31,4 @@ services:
 networks:
   service-discovery_internal:
     external: true
+  internal:
