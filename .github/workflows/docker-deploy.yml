@@ -12,9 +12,9 @@ jobs:
       - name: executing remote ssh commands
         uses: appleboy/ssh-action@v1.0.0
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
+          host: ${{ secrets.DEPLOY_SERVER_HOST }}
+          username: ${{ secrets.DEPLOY_SERVER_USER }}
+          password: ${{ secrets.DEPLOY_SERVER_PASSWORD }}
           script: |
             cd /projects/api-gateway
             git pull
