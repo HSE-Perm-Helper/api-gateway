@@ -12,6 +12,7 @@ services:
       - SPRING_PROFILES_ACTIVE=$ACTIVE_PROFILE
       - SERVER_PORT=$SPRING_LOCAL_PORT
       - APP_SECURITY_PRIVATE-KEY=$PRIVATE_KEY
+      - CONFIG_SERVER=$CONFIG_SERVER
       - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://$SERVICE_DISCOVERY_USER:$SERVICE_DISCOVERY_PASSWORD@$SERVICE_DISCOVERY_HOST:$SERVICE_DISCOVERY_PORT/eureka
     restart: always
     networks:
@@ -33,3 +34,5 @@ networks:
   service-discovery_internal:
     external: true
   internal:
+  config-server_internal:
+    external: true

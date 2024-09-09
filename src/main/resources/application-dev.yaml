@@ -20,5 +20,10 @@ spring:
             - Path=/users/**,/user/**,/notifications/**,/v3/schedules/**,/v3/schedule/**,/schedule/**
           filters:
             - TelegramBotAuthFilter
+    config:
+      enabled: true
+  config:
+    import: configserver:http://localhost:8888
 debug: true
+
 
