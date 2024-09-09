@@ -18,6 +18,7 @@ services:
     networks:
       - internal
       - service-discovery_internal
+      - config-server_internal
   caddy:
     image: caddy
     restart: always
