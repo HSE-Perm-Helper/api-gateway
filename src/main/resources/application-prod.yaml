@@ -13,4 +13,6 @@ spring:
           uri: lb://main-backend
           predicates:
             - Path=/users/**,/user/**,/notifications/**,/v3/schedules/**,/v3/schedule/**,/schedule/**
+          filters:
+            - TelegramBotAuthFilter
 
