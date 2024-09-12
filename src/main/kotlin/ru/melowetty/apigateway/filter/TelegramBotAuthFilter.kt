@@ -22,7 +22,7 @@ class TelegramBotAuthFilter(
     override fun apply(config: Config?): GatewayFilter {
         return GatewayFilter { exchange, chain ->
             val request = exchange.request
-            val secretKey = request.headers.getValue(SECRET_KEY_HEADER)?.joinToString("")
+            val secretKey = request.headers.get(SECRET_KEY_HEADER)?.joinToString("")
                 ?: return@GatewayFilter onError(exchange, "Не указан пароль в заголовках!", HttpStatus.BAD_REQUEST)
             if (telegramBotAuthService.checkSecretKey(secretKey)) {
                 return@GatewayFilter chain.filter(exchange)
