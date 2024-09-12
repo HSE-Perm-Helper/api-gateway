@@ -9,7 +9,6 @@ app:
   security:
     private-key: 123456
 
-
 spring:
   cloud:
     gateway:
@@ -20,10 +19,17 @@ spring:
             - Path=/users/**,/user/**,/notifications/**,/v3/schedules/**,/v3/schedule/**,/schedule/**
           filters:
             - TelegramBotAuthFilter
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/test/notifications/**
+          filters:
+            - TelegramBotAuthFilter
+            - StripPrefix=2
     config:
       enabled: true
   config:
-    import: configserver:http://localhost:8888
+    import: optional:configserver:http://localhost:8888
 debug: true
 
 
