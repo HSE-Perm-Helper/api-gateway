@@ -1,0 +1,21 @@
+name: Deploying
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    name: Service deploying
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.DEPLOY_SERVER_HOST }}
+          username: ${{ secrets.DEPLOY_SERVER_USER }}
+          key: ${{ secrets.DEPLOY_SERVER_KEY }}
+          script: |
+            cd services/api-gateway
+            git pull
+            docker compose restart
