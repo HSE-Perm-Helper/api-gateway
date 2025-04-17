@@ -1,0 +1,62 @@
+:80, :443, api.hse-perm-helper.ru  {
+    vars {
+        main_service {env.MAIN_SERVICE_URL}
+        notification_service {env.NOTIFICATION_SERVICE_URL}
+        remote_schedule_service {env.REMOTE_SCHEDULE_SERVICE_URL}
+    }
+
+    @secret_required {
+        path /users* /user* /v3/schedules* /v3/schedule* /schedule* /v2/users* /remote-schedule-management*
+    }
+    
+    handle @secret_required {
+        @no_header not header X-Secret-Key *
+        handle @no_header {
+            respond "Не указан пароль в заголовках!" 400
+        }
+        
+        @correct_key header X-Secret-Key {env.TELEGRAM_BOT_SECRET_KEY}
+        handle @correct_key {
+            reverse_proxy {vars.main_service}
+        }
+        respond "Доступ запрещён!" 403
+    }
+
+    @notiifcations_router {
+        path /v2/notifications/* /v2/notifications
+    }
+
+    handle @notiifcations_router {
+        @no_header not header X-Secret-Key *
+        handle @no_header {
+            respond "Не указан пароль в заголовках!" 400
+        }
+        
+        @correct_key header X-Secret-Key {env.TELEGRAM_BOT_SECRET_KEY}
+        handle @correct_key {
+            uri strip_prefix /v2
+            reverse_proxy {vars.notification_service}
+        }
+        respond "Доступ запрещён!" 403
+    }
+
+    @verification_router {
+        path /verification /verification/*
+    }
+
+    handle @verification_router {
+        reverse_proxy {vars.main_service}
+    }
+
+    @remote_schedule_router {
+        path /remote-schedule/* /remote-schedule
+    }
+
+    handle @remote_schedule_router {
+        reverse_proxy {vars.remote_schedule_service}
+    }
+
+    handle {
+        respond "Resource not Found" 404
+    }
+}
