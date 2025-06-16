@@ -40,6 +40,14 @@
         respond "Доступ запрещён!" 403
     }
 
+    @public_schedule_router {
+        path /public/schedule/* /public/schedule
+    }
+
+    handle @public_schedule_router {
+        reverse_proxy {vars.main_service}
+    }
+
     @verification_router {
         path /verification /verification/*
     }
