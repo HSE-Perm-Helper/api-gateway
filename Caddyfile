@@ -6,7 +6,7 @@
     }
 
     @secret_required {
-        path /users* /user* /v3/schedules* /v3/schedule* /schedule* /v2/users* /remote-schedule-management* /v1/schedule-info*
+        path /users* /user* /v3/schedules* /v3/schedule* /schedule* /v2/users* /remote-schedule-management* /v1/schedule-info* /v3/users*
     }
     
     handle @secret_required {
