@@ -6,7 +6,7 @@
     }
 
     @secret_required {
-        path /users* /user* /v3/schedules* /v3/schedule* /schedule* /v2/users* /remote-schedule-management* /v1/schedule-info* /v3/users*
+        path /users* /user* /remote-schedule-management* /v1/timetable-info* /v3/users*
     }
     
     handle @secret_required {
@@ -38,14 +38,6 @@
             reverse_proxy {vars.notification_service}
         }
         respond "Доступ запрещён!" 403
-    }
-
-    @public_schedule_router {
-        path /public/schedule/* /public/schedule
-    }
-
-    handle @public_schedule_router {
-        reverse_proxy {vars.main_service}
     }
 
     @verification_router {
