@@ -2,11 +2,10 @@
     vars {
         main_service {env.MAIN_SERVICE_URL}
         notification_service {env.NOTIFICATION_SERVICE_URL}
-        remote_schedule_service {env.REMOTE_SCHEDULE_SERVICE_URL}
     }
 
     @secret_required {
-        path /users* /user* /remote-schedule-management* /v1/timetable-info* /v3/users*
+        path /users* /user* /v1/timetable-info* /v3/users*
     }
     
     handle @secret_required {
@@ -53,7 +52,7 @@
     }
 
     handle @remote_schedule_router {
-        reverse_proxy {vars.remote_schedule_service}
+        reverse_proxy {vars.main_service}
     }
 
     handle {
